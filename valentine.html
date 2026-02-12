@@ -216,18 +216,22 @@
 
         // Function to move the NO button to a random position
         function moveNoButton() {
-            const maxX = window.innerWidth - noBtn.offsetWidth - 50;
-            const maxY = window.innerHeight - noBtn.offsetHeight - 50;
+            const btnWidth = noBtn.offsetWidth || 100;
+            const btnHeight = noBtn.offsetHeight || 50;
+            const maxX = window.innerWidth - btnWidth - 50;
+            const maxY = window.innerHeight - btnHeight - 50;
             
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
+            const randomX = Math.max(0, Math.random() * maxX);
+            const randomY = Math.max(0, Math.random() * maxY);
             
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
 
-        // Initial position for NO button
-        moveNoButton();
+        // Initial position for NO button after DOM is ready
+        window.addEventListener('load', () => {
+            moveNoButton();
+        });
 
         // Move NO button when mouse gets near it
         noBtn.addEventListener('mouseenter', () => {
@@ -262,14 +266,17 @@
                     heart.className = 'floating-heart';
                     heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
                     heart.style.left = Math.random() * 100 + '%';
-                    heart.style.animationDelay = Math.random() * 2 + 's';
-                    heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                    const delay = Math.random() * 2;
+                    const duration = Math.random() * 2 + 3;
+                    heart.style.animationDelay = delay + 's';
+                    heart.style.animationDuration = duration + 's';
                     heartsContainer.appendChild(heart);
                     
-                    // Remove heart after animation
+                    // Remove heart after animation completes
+                    const totalTime = (delay + duration) * 1000;
                     setTimeout(() => {
                         heart.remove();
-                    }, 5000);
+                    }, totalTime);
                 }, i * 100);
             }
         }
