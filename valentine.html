@@ -171,7 +171,7 @@
         .floating-heart {
             position: absolute;
             font-size: 30px;
-            animation: float 4s ease-in infinite;
+            animation: float 4s ease-in;
             opacity: 0;
         }
 
@@ -229,7 +229,7 @@
         }
 
         // Initial position for NO button after DOM is ready
-        window.addEventListener('load', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             moveNoButton();
         });
 
